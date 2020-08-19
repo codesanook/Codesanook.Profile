@@ -1,0 +1,174 @@
+﻿@using Codesanook.BasicUserProfile.ViewModels
+@model UserRegistrationViewModel
+
+@{
+
+    Style.Include("codesanook-basic-user-profile.css");
+
+    var requirementsMessage = T.Plural(
+        "The password can't be empty",
+        "Passwords are required to be a minimum of {0} characters in length",
+        Model.PasswordLength
+    ).Text;
+
+    var additionalRequirements = new (bool IsRequired, string Message)[] {
+       (Model.LowercaseRequirement, T("one lowercase letter").Text),
+       (Model.UppercaseRequirement, T("one uppercase letter").Text),
+       (Model.NumberRequirement, T("one number").Text),
+       (Model.SpecialCharacterRequirement, T("one special character").Text)
+    };
+
+    var additionalRequirementMessages = additionalRequirements.Aggregate(new List<string>(), (accumulate, currentRequirement) =>
+    {
+        if (currentRequirement.IsRequired)
+        {
+            accumulate.Add(currentRequirement.Message);
+        }
+        return accumulate;
+    });
+
+    if (additionalRequirementMessages.Count > 0)
+    {
+        requirementsMessage = T($" {requirementsMessage} and must contain at least {T(string.Join(", ", additionalRequirementMessages)).Text}").Text;
+    }
+}
+
+<div class="text-center">
+    <h1>@Html.TitleForPage(T("Register new user").ToString())</h1>
+    <p>@T("Use the form below to create a new account.")</p>
+    <p>@requirementsMessage</p>
+    @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
+</div>
+@using (
+      Html.BeginFormAntiForgeryPost(
+          Url.Action(
+              "Register",
+              new { ReturnUrl = Request.QueryString["ReturnUrl"] }
+          ),
+          FormMethod.Post
+      )
+  )
+{
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="@Html.IdFor(m=>m.FirstName)">
+                    @T(Html.DisplayNameFor(m => m.FirstName).ToString())
+                </label>
+                @Html.TextBoxFor(m => m.FirstName, new
+                {
+                    @class = "form-control",
+                    @placeholder = T(Html.DisplayNameFor(m => m.FirstName).ToString())
+                })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="@Html.IdFor(m=>m.LastName)">
+                    @T(Html.DisplayNameFor(m => m.LastName).ToString())
+                </label>
+                @Html.TextBoxFor(m => m.LastName, new
+                {
+                   @class = "form-control",
+                   @placeholder = T(Html.DisplayNameFor(m => m.LastName).ToString())
+                })
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="@Html.IdFor(m=>m.Email)">
+                    @T(Html.DisplayNameFor(m => m.Email).ToString())
+                </label>
+                @Html.TextBoxFor(m => m.Email, new
+           {
+               @class = "form-control",
+               type = "email",
+               @placeholder = T(Html.DisplayNameFor(m => m.Email).ToString())
+           })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="@Html.IdFor(m=>m.Password)">
+                    @T(Html.DisplayNameFor(m => m.Password).ToString())
+                </label>
+                @Html.PasswordFor(m => m.Password, new
+           {
+               @class = "form-control",
+               @placeholder = T(Html.DisplayNameFor(m => m.Password).ToString())
+           })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="@Html.IdFor(m=>m.ConfirmPassword)">
+                    @T(Html.DisplayNameFor(m => m.ConfirmPassword).ToString())
+                </label>
+                @Html.PasswordFor(m => m.ConfirmPassword, new
+           {
+               @class = "form-control",
+               @placeholder = T(Html.DisplayNameFor(m => m.ConfirmPassword).ToString())
+           })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="@Html.IdFor(m=>m.MobilePhoneNumber)">
+                    @T(Html.DisplayNameFor(m => m.MobilePhoneNumber).ToString())
+                </label>
+                <div class="row">
+                    <div class="col-4 col-md-2">
+                        @Html.TextBoxFor(m => m.MobilePhoneCode, new
+                   {
+                       @class = "form-control",
+                       type = "tel",
+                       @placeholder = T(Html.DisplayNameFor(m => m.MobilePhoneCode).ToString())
+                   })
+                    </div>
+                    <div class="col">
+                        @Html.TextBoxFor(m => m.MobilePhoneNumber, new
+                   {
+                       @class = "form-control",
+                       type = "tel",
+                       @placeholder = T(Html.DisplayNameFor(m => m.MobilePhoneNumber).ToString())
+                   })
+                        @Html.ValidationMessageFor(m => m.MobilePhoneNumber)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="@Html.IdFor(m=>m.OrganizationName)">
+                    @T(Html.DisplayNameFor(m => m.OrganizationName).ToString())
+                </label>
+                @Html.TextBoxFor(m => m.OrganizationName, new
+               {
+                   @class = "form-control",
+                   @placeholder = T(Html.DisplayNameFor(m => m.OrganizationName).ToString())
+               })
+                @Html.ValidationMessageFor(m => m.OrganizationName)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group clearfix">
+                <button class="btn btn-secondary pull-right" type="submit">@T("Register")</button>
+            </div>
+        </div>
+    </div>
+}
