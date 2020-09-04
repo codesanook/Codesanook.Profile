@@ -4,6 +4,7 @@
     "description": "ReactJS project for codesanook-basic-user-profile",
     "scripts": {
         "dev": "webpack --mode=development",
+        "build": "webpack --mode=production",
         "watch": "webpack --mode=development --watch"
     },
     "author": {
