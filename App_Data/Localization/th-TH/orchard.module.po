@@ -1,2 +1,63 @@
-﻿
+﻿msgid "Username"
+msgstr "ชื่อผู้ใช้"
+
+msgid "Password"
+msgstr "รหัสผ่าน"
+
+msgid "Remember Me"
+msgstr "จดจำฉันไว้"
+
+msgid "Remember Me"
+msgstr "จดจำฉันไว้"
+
+msgid "Account Information"
+msgstr "ข้อมูลบัญชีผู้ใช้"
+
+msgid "Please enter your username and password."
+msgstr "กรุณากรอกชื่อผู้ใช้และรหัสผ่านของคุณ"
+
+msgid "one lowercase letter"
+msgstr "อักษรตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว"
+
+msgid "one uppercase letter"
+msgstr "อักษรตัวพิมพ์ใหญ่อย่างน้อยหนึ่งตัว"
+
+msgid "one number"
+msgstr "ตัวเลขอย่างน้อยหนึ่งตัว"
+
+msgid "one special character"
+msgstr "อักขระพิเศษอย่างน้อยหนึ่งตัว"
+
+msgid "Register new user"
+msgstr "สมัครสมาชิกผู้ใช้ใหม่"
+
+msgid "Use the form below to create a new account."
+msgstr "กรอกข้อมูลด้านล่างเพื่อสร้างบัญชีใหม่"
+
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "การสร้างบัญชีไม่สำเร็จ โปรดแก้ไขข้อผิดพลาดและลองอีกครั้ง"
+
+msgid "The password can't be empty"
+msgstr "กรุณากรอกรหัสผ่าน"
+
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "รหัสผ่านต้องมีความยาวอย่างน้อย {0} ตัวอักษร"
+
+msgid "First Name"
+msgstr "ชื่อ"
+
+msgid "Last Name"
+msgstr "นามสกุล"
+
+msgid "Email"
+msgstr "อีเมลล์"
+
+msgid "Confirm Password"
+msgstr "ยืนยันรหัสผ่าน"
+
+msgid "Code"
+msgstr "รหัส"
+
+msgid "Organization Name"
+msgstr "ชื่อองค์กร"
 
