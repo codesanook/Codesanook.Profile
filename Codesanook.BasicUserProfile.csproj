@@ -112,6 +112,7 @@
     <Compile Include="ViewModels\UserRegistrationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="packages.config" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
@@ -138,7 +139,9 @@
       <Name>Orchard.Users</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="App_Data\Localization\th-TH\orchard.module.po" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\UserProfile.cshtml" />
   </ItemGroup>

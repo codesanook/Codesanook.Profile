@@ -349,7 +349,10 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-
 # Ignore generated JavaScript and StyleSheet file
 Scripts/**/*.js
 Styles/**/*.css
+
+# Not ignore localization
+!App_Data/Localization
+
