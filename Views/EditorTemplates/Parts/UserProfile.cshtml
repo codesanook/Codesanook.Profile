@@ -21,7 +21,8 @@
     <label for="@Html.IdFor(m => m.MobilePhoneNumber)">
         @T(Html.DisplayNameFor(m=>m.MobilePhoneNumber).ToString())
     </label>
-    @Html.TextBoxFor(m => m.MobilePhoneNumber, new { @class = "text medium" })
+    @* Use EditorTemplates/PhoneNumber.cshml in theme *@ 
+    @Html.EditorFor(m=>m.MobilePhoneNumber)
     @Html.ValidationMessageFor(m => m.MobilePhoneNumber)
 </div>
 <div class="form-group">

@@ -39,15 +39,14 @@
     <p>@requirementsMessage</p>
     @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
 </div>
-@using (
-      Html.BeginFormAntiForgeryPost(
-          Url.Action(
-              "Register",
-              new { ReturnUrl = Request.QueryString["ReturnUrl"] }
-          ),
-          FormMethod.Post
-      )
-  )
+
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action(
+        "Register",
+        new { ReturnUrl = Request.QueryString["ReturnUrl"] }
+    ),
+    FormMethod.Post
+))
 {
     <div class="row">
         <div class="col-12 col-md-6">
@@ -114,11 +113,14 @@
                 <label for="@Html.IdFor(m=>m.ConfirmPassword)">
                     @T(Html.DisplayNameFor(m => m.ConfirmPassword).ToString())
                 </label>
-                @Html.PasswordFor(m => m.ConfirmPassword, new
-           {
-               @class = "form-control",
-               @placeholder = T(Html.DisplayNameFor(m => m.ConfirmPassword).ToString())
-           })
+                @Html.PasswordFor(
+                   m => m.ConfirmPassword,
+                   new
+                        {
+                   @class = "form-control",
+                   @placeholder = T(Html.DisplayNameFor(m => m.ConfirmPassword).ToString())
+                   }
+               )
                 @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </div>
         </div>
@@ -129,25 +131,8 @@
                 <label for="@Html.IdFor(m=>m.MobilePhoneNumber)">
                     @T(Html.DisplayNameFor(m => m.MobilePhoneNumber).ToString())
                 </label>
-                <div class="row">
-                    <div class="col-4 col-md-2">
-                        @Html.TextBoxFor(m => m.MobilePhoneCode, new
-                   {
-                       @class = "form-control",
-                       type = "tel",
-                       @placeholder = T(Html.DisplayNameFor(m => m.MobilePhoneCode).ToString())
-                   })
-                    </div>
-                    <div class="col">
-                        @Html.TextBoxFor(m => m.MobilePhoneNumber, new
-                   {
-                       @class = "form-control",
-                       type = "tel",
-                       @placeholder = T(Html.DisplayNameFor(m => m.MobilePhoneNumber).ToString())
-                   })
-                        @Html.ValidationMessageFor(m => m.MobilePhoneNumber)
-                    </div>
-                </div>
+                @Html.EditorFor(m => m.MobilePhoneNumber)
+                @Html.ValidationMessageFor(m => m.MobilePhoneNumber)
             </div>
         </div>
         <div class="col-12 col-md-6">

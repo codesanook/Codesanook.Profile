@@ -23,10 +23,8 @@ namespace Codesanook.BasicUserProfile.ViewModels {
         [Required]
         public string ConfirmPassword { get; set; }
 
-        [DisplayName("Code")]
-        public string MobilePhoneCode { get; set; }
-
         [DisplayName("Phone Number")]
+        [DataType(DataType.PhoneNumber)]
         public string MobilePhoneNumber { get; set; }
 
         [DisplayName("Organization Name")]
