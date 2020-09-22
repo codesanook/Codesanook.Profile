@@ -25,7 +25,7 @@ using OrchardAccountController = Orchard.Users.Controllers.AccountController;
 namespace Codesanook.BasicUserProfile.Controllers {
 
     [ValidateInput(false), Themed]
-    public class AccountController : Controller, IUpdateModel {
+    public class AccountController : Controller {
         private readonly IOrchardServices orchardService;
         private readonly ISiteService siteService;
         private readonly IContentManager contentManager;
@@ -70,28 +70,22 @@ namespace Codesanook.BasicUserProfile.Controllers {
             }
 
             // strongly type as property of UserRegistrationViewModel
-            UserRegistrationViewModel shape = shapeFactory.RegisterUser(typeof(UserRegistrationViewModel));
-            shape = SetMembershipSettings(shape, membershipSettings);
+            var shape = shapeFactory.RegisterUser(typeof(UserRegistrationViewModel));
+            SetMembershipSettings(shape, membershipSettings);
             return new ShapeResult(this, shape);
         }
 
         [HttpPost]
-        public ActionResult Register(
-            UserRegistrationViewModel viewModel,
-            string returnUrl = null
-        ) {
-
-            if (!ModelState.IsValid) {
-                return View(viewModel);
-            }
-
-            // ensure users can register
+        public ActionResult Register(UserRegistrationViewModel viewModel, string returnUrl = null) {
             var membershipSettings = membershipService.GetSettings();
+            // ensure users can register
             if (!membershipSettings.UsersCanRegister) {
                 return HttpNotFound();
             }
 
-            //viewModel = SetMembershipSettings(viewModel, membershipSettings);
+            if (!ModelState.IsValid) {
+                return new ShapeResult(this, CreateRegisterShape(viewModel, membershipSettings));
+            }
 
             var emailWithoutDomain = viewModel.Email.Substring(0, viewModel.Email.LastIndexOf('@'));
             // Generate username from emailWithoutDoman + random 8 characters
@@ -151,7 +145,6 @@ namespace Codesanook.BasicUserProfile.Controllers {
                     userEventHandler.LoggingIn(username, viewModel.Password);
                     authenticationService.SignIn(user, false /* createPersistentCookie */);
                     userEventHandler.LoggedIn(user);
-
                     return this.RedirectLocal(returnUrl);
                 }
 
@@ -162,8 +155,23 @@ namespace Codesanook.BasicUserProfile.Controllers {
             }
 
             // If we got this far, something failed, redisplay form
+            return new ShapeResult(this, CreateRegisterShape(viewModel, membershipSettings));
+        }
+
+        private UserRegistrationViewModel CreateRegisterShape(UserRegistrationViewModel viewModel, IMembershipSettings membershipSettings) {
             UserRegistrationViewModel shape = shapeFactory.RegisterUser(typeof(UserRegistrationViewModel));
-            return new ShapeResult(this, shape);
+            SetViewModelValue(viewModel, shape);
+            SetMembershipSettings(shape, membershipSettings);
+            return shape;
+        }
+
+        private static void SetViewModelValue(UserRegistrationViewModel viewModel, UserRegistrationViewModel shape) {
+            shape.FirstName = viewModel.FirstName;
+            shape.LastName = viewModel.LastName;
+            shape.Email = viewModel.Email;
+            shape.Password = viewModel.Password;
+            shape.MobilePhoneNumber = viewModel.MobilePhoneNumber;
+            shape.OrganizationName = viewModel.OrganizationName;
         }
 
         private static void UpdateUserProfile(IUser user, UserRegistrationViewModel viewModel) {
@@ -174,20 +182,12 @@ namespace Codesanook.BasicUserProfile.Controllers {
             userProfilePart.OrganizationName = viewModel.OrganizationName;
         }
 
-        private UserRegistrationViewModel SetMembershipSettings(UserRegistrationViewModel viewModel, IMembershipSettings memnerSetting) {
+        private void SetMembershipSettings(UserRegistrationViewModel viewModel, IMembershipSettings memnerSetting) {
             viewModel.PasswordLength = memnerSetting.GetMinimumPasswordLength();
             viewModel.LowercaseRequirement = memnerSetting.GetPasswordLowercaseRequirement();
             viewModel.UppercaseRequirement = memnerSetting.GetPasswordUppercaseRequirement();
             viewModel.SpecialCharacterRequirement = memnerSetting.GetPasswordSpecialRequirement();
             viewModel.NumberRequirement = memnerSetting.GetPasswordNumberRequirement();
-            return viewModel;
-        }
-
-        // users/account/register-success
-        public ActionResult RegisterSuccess() {
-            // method name RegisterSuccess match RegisterSuccess.cshtml in Views folder 
-            var shape = shapeFactory.RegisterSuccess(Email: "jose@realman.com");
-            return new ShapeResult(this, shape);
         }
 
         private static string ErrorCodeToString(MembershipCreateStatus createStatus) {
@@ -272,16 +272,6 @@ namespace Codesanook.BasicUserProfile.Controllers {
             return ModelState.IsValid;
         }
 
-        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage) =>
-            ModelState.AddModelError(key, errorMessage.ToString());
-
-        bool IUpdateModel.TryUpdateModel<TModel>(
-            TModel model,
-            string prefix,
-            string[] includeProperties,
-            string[] excludeProperties
-        ) => TryUpdateModel(model, prefix, includeProperties, excludeProperties);
-
         private void ValidatePassword(string password) {
             if (!userService.PasswordMeetsPolicies(password, out IDictionary<string, LocalizedString> validationErrors)) {
                 foreach (var error in validationErrors) {
@@ -289,6 +279,5 @@ namespace Codesanook.BasicUserProfile.Controllers {
                 }
             }
         }
-
     }
 }

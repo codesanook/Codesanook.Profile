@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Codesanook.Common.PropertyBinders;
 using Orchard.DisplayManagement.Shapes;
 
 namespace Codesanook.BasicUserProfile.ViewModels {
@@ -24,10 +25,14 @@ namespace Codesanook.BasicUserProfile.ViewModels {
         public string ConfirmPassword { get; set; }
 
         [DisplayName("Phone Number")]
+        [Required]
+        [StringLength(10)]
+        [PropertyBinder(typeof(PhoneNumberPropertyBinder))]
         [DataType(DataType.PhoneNumber)]
         public string MobilePhoneNumber { get; set; }
 
         [DisplayName("Organization Name")]
+        [Required]
         public string OrganizationName { get; set; }
 
         public int PasswordLength { get; set; }
