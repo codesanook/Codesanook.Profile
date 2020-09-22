@@ -2,8 +2,9 @@
 @model UserRegistrationViewModel
 
 @{
-
     Style.Include("codesanook-basic-user-profile.css");
+    Script.Require("React").AtHead();
+    Script.Require("ReactDOM").AtHead();
 
     var requirementsMessage = T.Plural(
         "The password can't be empty",
