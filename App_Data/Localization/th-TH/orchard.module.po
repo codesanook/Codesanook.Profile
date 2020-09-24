@@ -50,7 +50,7 @@ msgid "Last Name"
 msgstr "นามสกุล"
 
 msgid "Email"
-msgstr "อีเมลล์"
+msgstr "อีเมล"
 
 msgid "Confirm Password"
 msgstr "ยืนยันรหัสผ่าน"
