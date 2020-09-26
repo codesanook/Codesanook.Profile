@@ -116,6 +116,9 @@ namespace Codesanook.BasicUserProfile.Controllers {
                             siteUrl = HttpContext.Request.ToRootUrlString();
                         }
 
+                        // To make it available in an email template without changing Orchard.User core project
+                        HttpContext.Items["userProfilePart"] = user.As<UserProfilePart>();
+
                         userService.SendChallengeEmail(
                             user.As<UserPart>(),
                             nonce => Url.MakeAbsolute(
@@ -143,6 +146,7 @@ namespace Codesanook.BasicUserProfile.Controllers {
                     }
 
                     userEventHandler.LoggingIn(username, viewModel.Password);
+                    // Force log in user
                     authenticationService.SignIn(user, false /* createPersistentCookie */);
                     userEventHandler.LoggedIn(user);
                     return this.RedirectLocal(returnUrl);
