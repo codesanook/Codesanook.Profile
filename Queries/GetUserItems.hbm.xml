@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- namespace https://nhibernate.info/previous-doc/v4.1/single/index.html#mapping-declaration-xmlns -->
+<!-- HQL https://nhibernate.info/previous-doc/v4.1/single/index.html#queryhql -->
+<hibernate-mapping
+    xmlns="urn:nhibernate-mapping-2.2"
+    namespace="Codesanook.BasicUserProfile.Models"
+    assembly="Codesanook.BasicUserProfile">
+    <query name="GetInjuriesByFullTextSearch">
+        <query-param name="searchTerm" type="string"/>
+        <query-param name="hospitalId" type="int"/>
+        <![CDATA[
+            SELECT 
+                user.Id,
+                user.EmailStatus,
+                profile.FirstName,
+                profile.LastName,
+                user.Email,
+                user.RegistrationStatus,
+                user.CreatedUtc,
+                user.LastLoginUtc
+            FROM Orchard.ContentManagement.Records.ContentItemVersionRecord version
+                JOIN version.ContentItemRecord item
+                JOIN item.ContentTypeRecord type
+                JOIN item.UserPartRecord user
+                JOIN item.UserProfilePart profile
+            WHERE version.Published = true
+            AND type.Name = 'User'
+        ]]>
+    </query>
+</hibernate-mapping>
