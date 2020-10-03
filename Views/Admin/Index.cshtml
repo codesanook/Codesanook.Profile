@@ -27,7 +27,7 @@
         <button type="submit" name="submit.BulkEdit" value="@T("Apply")">@T("Apply")</button>
     </fieldset>
     <fieldset class="bulk-actions">
-        @Html.TextBoxFor(m => m.Options.Search, new { @class = "text" })
+        @Html.TextBoxFor(m => m.Options.Search, new { @class = "text", placeholder = "first name or email" })
         <label for="filterResults">@T("Filter:")</label>
         <select id="filterResults" name="@Html.NameOf(m => m.Options.Filter)">
             @Html.SelectOption(Model.Options.Filter, UsersFilter.All, T("All Users").ToString())
@@ -74,10 +74,10 @@
                         {
                             <img class="icon" src="@Href("~/Modules/Orchard.Users/Content/Admin/images/offline.gif") " alt="@T("Moderated") " title="@if (entry.User.EmailStatus == UserStatus.Approved) { @T("User is moderated") } else { @T("E-mail validation is pending") }" />
                         }
-                        @entry.User.FirstName
+                        @(string.IsNullOrEmpty(entry.User.FirstName) ? entry.User.Username : entry.User.FirstName)
                     </td>
                     <td>
-                        @entry.User.LastName
+                        @(string.IsNullOrEmpty(entry.User.LastName) ? "-" : entry.User.LastName)
                     </td>
                     <td>
                         @entry.User.Email
