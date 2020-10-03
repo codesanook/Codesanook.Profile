@@ -33,7 +33,7 @@ namespace Codesanook.BasicUserProfile {
             },
             new RouteDescriptor {
                 Name = "BasicUserAdmin",
-                Priority = 1, // 
+                Priority = 1, // To override existing route in Orchard.Users
                 Route = new Route(
                     url:"admin/users", // Route cannot start with /
                     defaults: new RouteValueDictionary {
