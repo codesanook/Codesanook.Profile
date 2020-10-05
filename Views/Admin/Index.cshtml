@@ -2,18 +2,27 @@
 @using UserStatus = Orchard.Users.Models.UserStatus
 @using UsersBulkAction = Orchard.Users.ViewModels.UsersBulkAction
 @using UsersFilter = Orchard.Users.ViewModels.UsersFilter
+@using UsersOrder = Orchard.Users.ViewModels.UsersOrder
 
 @model UsersIndexViewModel
 @{
     var userIndex = 0;
     Layout.Title = T("Users").ToString();
+    const string userArea = "Orchard.Users";
 }
 <h1>User list</h1>
 
 @using (Html.BeginFormAntiForgeryPost())
 {
     @Html.ValidationSummary()
-    <div class="manage">@Html.ActionLink(T("Add a new user").ToString(), "Create", new { }, new { @class = "button primaryAction" })</div>
+    <div class="manage">
+        @Html.ActionLink(
+           T("Add a new user").ToString(),
+           "Create",
+           new { area = userArea },
+           new { @class = "button primaryAction" }
+       )
+    </div>
 
     <fieldset class="bulk-actions">
         <label for="publishActions">@T("Actions:")</label>
@@ -24,7 +33,16 @@
             @Html.SelectOption(Model.Options.BulkAction, UsersBulkAction.ChallengeEmail, T("Send challenge E-mail").ToString())
             @Html.SelectOption(Model.Options.BulkAction, UsersBulkAction.Delete, T("Delete").ToString())
         </select>
-        <button type="submit" name="submit.BulkEdit" value="@T("Apply")">@T("Apply")</button>
+        @*
+            Use default route URL of orchard defined in StandardExtensionRouteProvider
+            Orchard takes route name from Module name, e.g. Orchard.Users has module name Users
+        *@
+        <button type="submit"
+                name="submit.BulkEdit"
+                formaction="/Users/Admin/Index" 
+                value="@T("Apply")">
+                @T("Apply")
+        </button>
     </fieldset>
     <fieldset class="bulk-actions">
         @Html.TextBoxFor(m => m.Options.Search, new { @class = "text", placeholder = "first name or email" })
@@ -37,13 +55,13 @@
         </select>
         <label for="sortResults">@T("Sort by:")</label>
         <select id="sortResults" name="@Html.NameOf(m => m.Options.Order)">
-            @Html.SelectOption(Model.Options.Order, UsersOrder.FirstName, T("First name").ToString())
+            @Html.SelectOption(Model.Options.Order, UsersOrder.Name, T("First name").ToString())
             @Html.SelectOption(Model.Options.Order, UsersOrder.Email, T("Email").ToString())
             @Html.SelectOption(Model.Options.Order, UsersOrder.CreatedUtc, T("Creation Time").ToString())
             @Html.SelectOption(Model.Options.Order, UsersOrder.LastLoginUtc, T("Last Login Time").ToString())
         </select>
 
-        <button type="submit" name="submit.Filter" value="@T("Filter")">@T("Filter")</button>
+        <button type="submit" name="submit.Filter" formaction="@Url.Action("Index")" value="@T("Filter")">@T("Filter")</button>
     </fieldset>
     <fieldset>
         <table class="items">
@@ -85,27 +103,47 @@
                     <td>
                         <ul class="action-links">
                             <li class="action-link">
-                                @Html.ActionLink(T("Edit").ToString(), "Edit", new { entry.User.Id })
+                                @Html.ActionLink(T("Edit").ToString(), "Edit", new { id = entry.User.Id, area = userArea })
                             </li>
                             <li class="action-link">
-                                @Html.ActionLink(T("Delete").ToString(), "Delete", new { entry.User.Id }, new { itemprop = "RemoveUrl UnsafeUrl" })
+                                @Html.ActionLink(
+                                   T("Delete").ToString(),
+                                   "Delete",
+                                   new { id = entry.User.Id, area = userArea },
+                                   new { itemprop = "RemoveUrl UnsafeUrl" }
+                               )
                             </li>
                             @if (entry.User.RegistrationStatus == UserStatus.Pending)
                             {
                                 <li class="action-link">
-                                    @Html.ActionLink(T("Approve").ToString(), "Approve", new { entry.User.Id }, new { itemprop = "UnsafeUrl" })
+                                    @Html.ActionLink(
+                                       T("Approve").ToString(),
+                                       "Approve",
+                                       new { id = entry.User.Id, area = userArea },
+                                       new { itemprop = "UnsafeUrl" }
+                                   )
                                 </li>
                             }
                             else
                             {
                                 <li class="action-link">
-                                    @Html.ActionLink(T("Disable").ToString(), "Moderate", new { entry.User.Id }, new { itemprop = "UnsafeUrl" })
+                                    @Html.ActionLink(
+                                       T("Disable").ToString(),
+                                       "Moderate",
+                                       new { id = entry.User.Id, area = userArea },
+                                       new { itemprop = "UnsafeUrl" }
+                                   )
                                 </li>
                             }
                             @if (entry.User.EmailStatus == UserStatus.Pending)
                             {
                                 <li class="action-link">
-                                    @Html.ActionLink(T("Send challenge E-mail").ToString(), "SendChallengeEmail", new { entry.User.Id }, new { itemprop = "UnsafeUrl" })
+                                    @Html.ActionLink(
+                                       T("Send challenge E-mail").ToString(),
+                                       "SendChallengeEmail",
+                                       new { id = entry.User.Id, area = userArea },
+                                       new { itemprop = "UnsafeUrl" }
+                                   )
                                 </li>
                             }
                         </ul>
@@ -126,8 +164,6 @@
                 userIndex++;
             }
         </table>
-
         @Display(Model.Pager)
-
     </fieldset>
 }

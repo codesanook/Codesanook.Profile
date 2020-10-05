@@ -19,7 +19,7 @@ using Orchard.ContentManagement.Records;
 using NHibernate.SqlCommand;
 using Orchard.Users.Models;
 using UserIndexOptions = Codesanook.BasicUserProfile.ViewModels.UserIndexOptions;
-using UserOrder = Codesanook.BasicUserProfile.ViewModels.UsersOrder;
+using UserIndexViewModel = Codesanook.BasicUserProfile.ViewModels.UsersIndexViewModel;
 
 namespace Codesanook.BasicUserProfile.Controllers {
 
@@ -115,22 +115,22 @@ namespace Codesanook.BasicUserProfile.Controllers {
             .SetFirstResult(pager.GetStartIndex());
 
             switch (options.Order) {
-                case UserOrder.FirstName:
+                case UsersOrder.Name:
                     query.AddOrder(Order.Asc("profile.FirstName"));
                     break;
-                case UserOrder.Email:
+                case UsersOrder.Email:
                     query.AddOrder(Order.Asc("user.Email"));
                     break;
-                case UserOrder.CreatedUtc:
-                    query.AddOrder(Order.Asc("user.CreatedUtc"));
+                case UsersOrder.CreatedUtc:
+                    query.AddOrder(Order.Desc("user.CreatedUtc"));
                     break;
-                case UserOrder.LastLoginUtc:
-                    query.AddOrder(Order.Asc("user.LastLoginUtc"));
+                case UsersOrder.LastLoginUtc:
+                    query.AddOrder(Order.Desc("user.LastLoginUtc"));
                     break;
             }
 
             var results = query.List<UserProfileDto>();
-            var model = new ViewModels.UsersIndexViewModel {
+            var model = new UserIndexViewModel {
                 Users = results.Select(u => new ViewModels.UserEntry() { User = u }).ToList(),
                 Options = options,
                 Pager = pagerShape

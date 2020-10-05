@@ -21,11 +21,4 @@ namespace Codesanook.BasicUserProfile.ViewModels {
         public UsersFilter Filter { get; set; }
         public UsersBulkAction BulkAction { get; set; }
     }
-
-    public enum UsersOrder {
-        FirstName,
-        Email,
-        CreatedUtc,
-        LastLoginUtc
-    }
 }
