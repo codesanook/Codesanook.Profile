@@ -40,20 +40,15 @@ namespace Codesanook.BasicUserProfile {
                     )
             );
 
-            // Prepare content part
+            // Create a content part
             ContentDefinitionManager.AlterPartDefinition(
                 nameof(UserProfilePart),
                 part => part
                     .Attachable()
-                    .WithDescription("Provide user profile part")
+                    .WithDescription("Provide a basic user profile part")
             );
 
-            // Add UserProfilePart to existing User type
-            ContentDefinitionManager.AlterTypeDefinition(
-                "User",
-                type => type.WithPart(nameof(UserProfilePart))
-            );
-
+            // Let's Add UserProfilePart to existing User type manually from the admin dashboard
             return 1;
         }
     }

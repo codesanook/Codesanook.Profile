@@ -5,4 +5,4 @@ Website: https://www.codesanook.com
 Version: 1.0
 OrchardVersion: 1.10.3
 Description: An Orchard module for a basic user profile
-
+Dependencies: Codesanook.Common, Codesanook.ReactJS

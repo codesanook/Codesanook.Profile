@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- namespace https://nhibernate.info/previous-doc/v4.1/single/index.html#mapping-declaration-xmlns -->
 <!-- HQL https://nhibernate.info/previous-doc/v4.1/single/index.html#queryhql -->
+<!-- Build action embedded resource, do not copy -->
 <hibernate-mapping
     xmlns="urn:nhibernate-mapping-2.2"
     namespace="Codesanook.BasicUserProfile.Models"
     assembly="Codesanook.BasicUserProfile">
-    <query name="GetInjuriesByFullTextSearch">
+    <query name="GetUserProfiles">
         <query-param name="searchTerm" type="string"/>
         <query-param name="hospitalId" type="int"/>
         <![CDATA[

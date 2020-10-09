@@ -144,7 +144,7 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="packages.config" />
-    <EmbeddedResource Include="Queries\GetUserItems.hbm.xml" />
+    <EmbeddedResource Include="Queries\GetUserProfiles.hbm.xml" />
     <Content Include="Scripts\codesanook-basic-user-profile.js" />
     <Content Include="Styles\codesanook-basic-user-profile.css" />
     <Content Include="Web.config" />
