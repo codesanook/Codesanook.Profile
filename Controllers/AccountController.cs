@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Security;
 using Codesanook.Common;
-using Codesanook.BasicUserProfile.Models;
+using Codesanook.Users.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
@@ -19,10 +19,10 @@ using Orchard.Users.Events;
 using Orchard.Users.Models;
 using Orchard.Users.Services;
 using Orchard.Utility.Extensions;
-using Codesanook.BasicUserProfile.ViewModels;
+using Codesanook.Users.ViewModels;
 using OrchardAccountController = Orchard.Users.Controllers.AccountController;
 
-namespace Codesanook.BasicUserProfile.Controllers {
+namespace Codesanook.Users.Controllers {
 
     [ValidateInput(false), Themed]
     public class AccountController : Controller {
@@ -87,9 +87,8 @@ namespace Codesanook.BasicUserProfile.Controllers {
                 return new ShapeResult(this, CreateRegisterShape(viewModel, membershipSettings));
             }
 
-            var emailWithoutDomain = viewModel.Email.Substring(0, viewModel.Email.LastIndexOf('@'));
-            // Generate username from emailWithoutDoman + random 8 characters
-            var username = $"{emailWithoutDomain}-{RandomHelper.GenerateRandomCharacters(8)}";
+            // Generate a username from username + random 8 characters this will be useful for searching later
+            var username = $"{viewModel.FirstName.Trim()}-{RandomHelper.GenerateRandomCharacters(8)}";
 
             if (ValidateRegistration(username, viewModel.Email, viewModel.Password, viewModel.ConfirmPassword)) {
                 // Attempt to register the user
@@ -117,7 +116,7 @@ namespace Codesanook.BasicUserProfile.Controllers {
                         }
 
                         // To make it available in an email template without changing Orchard.User core project
-                        HttpContext.Items["userProfilePart"] = user.As<UserProfilePart>();
+                        HttpContext.Items["userProfilePart"] = user.As<BasicUserProfilePart>();
 
                         userService.SendChallengeEmail(
                             user.As<UserPart>(),
@@ -179,7 +178,7 @@ namespace Codesanook.BasicUserProfile.Controllers {
         }
 
         private static void UpdateUserProfile(IUser user, UserRegistrationViewModel viewModel) {
-            var userProfilePart = user.As<UserProfilePart>();
+            var userProfilePart = user.As<BasicUserProfilePart>();
             userProfilePart.FirstName = viewModel.FirstName;
             userProfilePart.LastName = viewModel.LastName;
             userProfilePart.MobilePhoneNumber = viewModel.MobilePhoneNumber;

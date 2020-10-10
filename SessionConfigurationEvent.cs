@@ -3,9 +3,9 @@ using Orchard.Utility;
 using NHibernate.Cfg;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Automapping;
-using Codesanook.BasicUserProfile.Models;
+using Codesanook.Users.Models;
 
-namespace Codesanook.BasicUserProfile
+namespace Codesanook.Users
 {
     public class SessionConfigurationEvents : ISessionConfigurationEvents
     {
@@ -43,7 +43,8 @@ namespace Codesanook.BasicUserProfile
 
         /// Called when fluent configuration has been prepared but not yet built. 
         public void Prepared(FluentConfiguration cfg) =>
-            cfg.Mappings(m => m.HbmMappings.AddFromAssemblyOf<UserProfilePartRecord>());
+            // Add HBM files
+            cfg.Mappings(m => m.HbmMappings.AddFromAssemblyOf<BasicUserProfilePartRecord>());
 
         /// Called when NHibernate configuration has been built or read from cache storage (mappings.bin file by default).
         ///Final, raw NH configuration object.

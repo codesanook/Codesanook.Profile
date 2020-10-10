@@ -1,9 +1,9 @@
-﻿using Codesanook.BasicUserProfile.Models;
+﻿using Codesanook.Users.Models;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 
-namespace Codesanook.BasicUserProfile {
+namespace Codesanook.Users {
     public class Migrations : DataMigrationImpl {
 
         public int Create() {
@@ -19,30 +19,30 @@ namespace Codesanook.BasicUserProfile {
 
             // Create UserProfilePartRecord table
             SchemaBuilder.CreateTable(
-                nameof(UserProfilePartRecord),
+                nameof(BasicUserProfilePartRecord),
                 table => table
                     .ContentPartRecord()
                     .Column<string>(
-                        nameof(UserProfilePartRecord.FirstName),
+                        nameof(BasicUserProfilePartRecord.FirstName),
                         column => column.WithLength(64)
                     )
                     .Column<string>(
-                        nameof(UserProfilePartRecord.LastName),
+                        nameof(BasicUserProfilePartRecord.LastName),
                         column => column.WithLength(64)
                     )
                     .Column<string>(
-                        nameof(UserProfilePartRecord.MobilePhoneNumber),
+                        nameof(BasicUserProfilePartRecord.MobilePhoneNumber),
                         column => column.WithLength(10)
                     )
                     .Column<string>(
-                        nameof(UserProfilePartRecord.OrganizationName),
+                        nameof(BasicUserProfilePartRecord.OrganizationName),
                         column => column.WithLength(64)
                     )
             );
 
             // Create a content part
             ContentDefinitionManager.AlterPartDefinition(
-                nameof(UserProfilePart),
+                nameof(BasicUserProfilePart),
                 part => part
                     .Attachable()
                     .WithDescription("Provide a basic user profile part")

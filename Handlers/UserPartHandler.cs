@@ -1,11 +1,11 @@
 ﻿using Orchard.Data;
 using Orchard.ContentManagement.Handlers;
-using Codesanook.BasicUserProfile.Models;
+using Codesanook.Users.Models;
 
-namespace Codesanook.BasicUserProfile.Handlers {
+namespace Codesanook.Users.Handlers {
     public class UserProfileParthHandler : ContentHandler {
 
-        public UserProfileParthHandler(IRepository<UserProfilePartRecord> repository) =>
+        public UserProfileParthHandler(IRepository<BasicUserProfilePartRecord> repository) =>
             Filters.Add(StorageFilter.For(repository));
     }
 }

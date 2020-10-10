@@ -1,4 +1,4 @@
-@using Codesanook.BasicUserProfile.ViewModels
+@using Codesanook.Users.ViewModels
 @using UserStatus = Orchard.Users.Models.UserStatus
 @using UsersBulkAction = Orchard.Users.ViewModels.UsersBulkAction
 @using UsersFilter = Orchard.Users.ViewModels.UsersFilter
@@ -6,11 +6,16 @@
 
 @model UsersIndexViewModel
 @{
+    Style.Require("Bootstrap").AtHead();
+    Style.Include("codesanook-users.css").AtHead();
+
     var userIndex = 0;
     Layout.Title = T("Users").ToString();
     const string userArea = "Orchard.Users";
 }
-<h1>User list</h1>
+
+@*Render ActivationEmailSent shape from ActivationEmailSent.cshtml*@
+@Display(Model.ActivationEmailSent)
 
 @using (Html.BeginFormAntiForgeryPost())
 {
@@ -45,7 +50,7 @@
         </button>
     </fieldset>
     <fieldset class="bulk-actions">
-        @Html.TextBoxFor(m => m.Options.Search, new { @class = "text", placeholder = "first name or email" })
+        @Html.TextBoxFor(m => m.Options.Search, new { @class = "text", placeholder = "first name or email or username" })
         <label for="filterResults">@T("Filter:")</label>
         <select id="filterResults" name="@Html.NameOf(m => m.Options.Filter)">
             @Html.SelectOption(Model.Options.Filter, UsersFilter.All, T("All Users").ToString())
@@ -55,6 +60,7 @@
         </select>
         <label for="sortResults">@T("Sort by:")</label>
         <select id="sortResults" name="@Html.NameOf(m => m.Options.Order)">
+            @* Use name here because of backward compatibility with Orchard.Users*@
             @Html.SelectOption(Model.Options.Order, UsersOrder.Name, T("First name").ToString())
             @Html.SelectOption(Model.Options.Order, UsersOrder.Email, T("Email").ToString())
             @Html.SelectOption(Model.Options.Order, UsersOrder.CreatedUtc, T("Creation Time").ToString())
@@ -71,6 +77,7 @@
                     <th scope="col">@T("First name")</th>
                     <th scope="col">@T("Last name")</th>
                     <th scope="col">@T("Email")</th>
+                    <th scope="col">@T("Username")</th>
                     <th scope="col">@T("Actions")</th>
                     <th scope="col">@T("Creation Time")</th>
                     <th scope="col">@T("Last Login Time")</th>
@@ -99,6 +106,9 @@
                     </td>
                     <td>
                         @entry.User.Email
+                    </td>
+                    <td>
+                        @entry.User.Username
                     </td>
                     <td>
                         <ul class="action-links">
@@ -141,7 +151,7 @@
                                     @Html.ActionLink(
                                        T("Send challenge E-mail").ToString(),
                                        "SendChallengeEmail",
-                                       new { id = entry.User.Id, area = userArea },
+                                       new { id = entry.User.Id },
                                        new { itemprop = "UnsafeUrl" }
                                    )
                                 </li>

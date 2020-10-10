@@ -3,10 +3,9 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Orchard.Mvc.Routes;
 
-namespace Codesanook.BasicUserProfile {
+namespace Codesanook.Users {
     public class Routes : IRouteProvider {
-        private const string areaName = "Codesanook.BasicUserProfile";
-        private const string areaOrchardUsers = "Orchard.Users";
+        private const string areaName = "Codesanook.Users";
 
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (var routeDescriptor in GetRoutes()) {

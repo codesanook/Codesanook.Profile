@@ -2,3 +2,21 @@
 .my-custom-class {
     color: #fff;
 }
+
+.activation-email {
+    .title {
+        font-size: 14px;
+    }
+
+    .url {
+        min-height: 50px;
+        margin: 10px 0;
+        font-size: 14px;
+        width:100% !important;
+    }
+    .email {
+        width:300px;
+        margin:10px 0;
+        font-size: 14px;
+    }
+}

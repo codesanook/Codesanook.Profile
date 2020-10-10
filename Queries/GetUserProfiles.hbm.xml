@@ -4,9 +4,9 @@
 <!-- Build action embedded resource, do not copy -->
 <hibernate-mapping
     xmlns="urn:nhibernate-mapping-2.2"
-    namespace="Codesanook.BasicUserProfile.Models"
-    assembly="Codesanook.BasicUserProfile">
-    <query name="GetUserProfiles">
+    namespace="Codesanook.Users.Models"
+    assembly="Codesanook.Users">
+    <query name="GetBasicUserProfiles">
         <query-param name="searchTerm" type="string"/>
         <query-param name="hospitalId" type="int"/>
         <![CDATA[

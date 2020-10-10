@@ -6,14 +6,14 @@
 using Orchard.Environment;
 using React;
 
-namespace Codesanook.BasicUserProfile {
+namespace Codesanook.Users {
     public class ShellEvent : IOrchardShellEvents {
         public void Activated() {
             ReactSiteConfiguration.Configuration
                 // Disable load Babel because we already transformed TypeScript with Webpack 
                 .SetLoadBabel(false)
                 .AddScriptWithoutTransform(
-                    "~/Modules/Codesanook.BasicUserProfile/Scripts/codesanook-basic-user-profile.js"
+                    "~/Modules/Codesanook.BasicUserProfile/Scripts/codesanook-users.js"
                 );
         }
 

@@ -1,6 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const outputFileName = 'codesanook-basic-user-profile';
+const outputFileName = 'codesanook-users';
 
 module.exports = {
     // https://webpack.js.org/configuration/entry-context/#entry

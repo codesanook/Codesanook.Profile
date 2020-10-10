@@ -1,8 +1,8 @@
 ﻿using System;
 using Orchard.Users.Models;
 
-namespace Codesanook.Profile.Models {
-    public class UserProfileDto {
+namespace Codesanook.Users.Models {
+    public class BasicUserProfileDto {
         public int Id { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }

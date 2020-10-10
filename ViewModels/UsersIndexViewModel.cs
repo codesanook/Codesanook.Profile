@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
-using Codesanook.Profile.Models;
+using Codesanook.Users.Models;
 using Orchard.Users.ViewModels;
 
-namespace Codesanook.BasicUserProfile.ViewModels {
+namespace Codesanook.Users.ViewModels {
 
     public class UsersIndexViewModel {
         public IList<UserEntry> Users { get; set; }
         public UserIndexOptions Options { get; set; }
         public dynamic Pager { get; set; }
+        public dynamic ActivationEmailSent { get; set; }
     }
 
     public class UserEntry {
-        public UserProfileDto User { get; set; }
+        public BasicUserProfileDto User { get; set; }
         public bool IsChecked { get; set; }
     }
 

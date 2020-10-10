@@ -1,7 +1,7 @@
 {
-    "name": "codesanook-event-management",
+    "name": "codesanook-users",
     "version": "1.0.0",
-    "description": "ReactJS project for codesanook-basic-user-profile",
+    "description": "ReactJS project for codesanook-users",
     "scripts": {
         "dev": "webpack --mode=development",
         "build": "webpack --mode=production",

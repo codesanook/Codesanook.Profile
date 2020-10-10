@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Codesanook.Common.PropertyBinders;
 using Orchard.DisplayManagement.Shapes;
 
-namespace Codesanook.BasicUserProfile.ViewModels {
+namespace Codesanook.Users.ViewModels {
     public class UserRegistrationViewModel : Shape {
 
         [DisplayName("First Name")]

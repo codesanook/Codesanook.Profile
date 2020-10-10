@@ -1,0 +1,28 @@
+﻿@{
+}
+<div class="activation-email">
+    <h1 class="title">Activation email URL:</h1>
+    @Html.TextArea(
+        "url",
+        Model.Url as string,
+        new
+        {
+            @class = "url form-control",
+            rows = "3",
+            onclick = "this.focus();this.select()",
+            @readonly = "readonly"
+        }
+    )
+
+    <h1 class="title">User's email:</h1>
+    @Html.TextBox(
+        "user-email",
+        Model.Email as string,
+        new
+        {
+            @class = "email form-control",
+            onclick = "this.focus();this.select()",
+            @readonly = "readonly"
+        }
+    )
+</div>
