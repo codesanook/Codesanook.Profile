@@ -13,7 +13,7 @@ namespace Codesanook.Users {
                 // Disable load Babel because we already transformed TypeScript with Webpack 
                 .SetLoadBabel(false)
                 .AddScriptWithoutTransform(
-                    "~/Modules/Codesanook.BasicUserProfile/Scripts/codesanook-users.js"
+                    "~/Modules/Codesanook.Users/Scripts/codesanook-users.js"
                 );
         }
 

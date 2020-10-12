@@ -173,7 +173,7 @@ namespace Codesanook.Users.Controllers {
             if (hasBasicUserProfilePart) {
                 projection
                     .Add(Projections.Property("profile.FirstName").As("FirstName"))
-                    .Add(Projections.Property("profile.Lastname").As("LastName"));
+                    .Add(Projections.Property("profile.LastName").As("LastName"));
             }
             else {
                 projection
