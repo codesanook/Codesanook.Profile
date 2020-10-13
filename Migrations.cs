@@ -45,7 +45,7 @@ namespace Codesanook.Users {
                 nameof(BasicUserProfilePart),
                 part => part
                     .Attachable()
-                    .WithDescription("Provide a basic user profile part")
+                    .WithDescription("Provide a basic user profile part, e.g. FirstName, LastName, MobilePhoneNumber, OrganizationName")
             );
 
             // Let's Add UserProfilePart to existing User type manually from the admin dashboard
