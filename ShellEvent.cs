@@ -1,8 +1,9 @@
 ﻿// How to integrate React server side rendering
-// Install React.Core install-package React.Core -version 5.0.0
+// Install React.Core, install-package React.Core -version 5.0.0
 // Add <add namespace="Codesanook.ReactJS" /> to <system.web.webPages.razor> in Web.config root level
-// Add Script.Require("React").AtHead(), ReactDOM and our script in a module Razor page
-// Add @Html.ReactInitJavaScript() at bottom of Document.cshtml of an active theme to initialize React script
+// Add Script.Require("React").AtHead() and Script.Require("ReactDOM").AtHead() and our script in a module Razor page
+// Include built TypeScript file At head in a module Razor page
+// Add @Html.ReactInitJavaScript() at bottom of Document.cshtml (theme) of an active theme to initialize React script
 using Orchard.Environment;
 using React;
 
